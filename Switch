@@ -1,0 +1,183 @@
+Current configuration : 4413 bytes
+!
+version 12.2
+no service pad
+no service timestamps debug uptime
+no service timestamps log uptime
+service password-encryption
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+username cisco password 7 110A1016141D
+no aaa new-model
+system mtu routing 1500
+ip subnet-zero
+!
+!
+ip domain-name redes2.com
+!
+!
+crypto pki trustpoint TP-self-signed-819359104
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-819359104
+ revocation-check none
+ rsakeypair TP-self-signed-819359104
+!
+!
+crypto pki certificate chain TP-self-signed-819359104
+ certificate self-signed 01
+  30820244 308201AD A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 38313933 35393130 34301E17 0D393330 33303130 31323632
+  325A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3831 39333539
+  31303430 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100
+  CD77905F B5295081 8EFA1D5B ABC46458 9565892E 0CD77A58 8A7C5445 A22B549E
+  10E5D801 C8688B06 0F7B52E0 46B139E2 0C4F79A2 9E35083E F041A694 303991EA
+  BF6C5082 9416B8F6 C3B4EBF5 9EC9F9E1 928AF2DC 849409D3 9E0EA49B 0580D2DC
+  660C5904 5F05CC0C EA0B9318 41F477ED 2C3385CA CF08F1DA BDBD9524 45980A79
+  02030100 01A36E30 6C300F06 03551D13 0101FF04 05300301 01FF3019 0603551D
+  11041230 10820E53 57312E72 65646573 322E636F 6D301F06 03551D23 04183016
+  8014B3DF 4EC2BE31 B66499BE 5A5F0050 D042B6AE D626301D 0603551D 0E041604
+  14B3DF4E C2BE31B6 6499BE5A 5F0050D0 42B6AED6 26300D06 092A8648 86F70D01
+  01040500 03818100 85140AFB 21019F2C 10BCE570 F806E946 388D5233 7D23BC22
+  CE050874 D105460E F44691EA 9EC67B1C A8092110 CCDF819F 9F4781C4 B663F0D3
+  26952019 2D807D18 278DEFDA 0F632FC9 09A92384 47F0D206 3D5BD3FB 54025DA1
+  77B8A7B3 4E9111E8 ACD35287 E9D9E5D2 D1F19B8A 6D6D4B0F 440AF406 0D4AB9E1
+  CA50D439 8817103E
+  quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+ip ssh version 2
+!
+!
+interface FastEthernet0/1
+ switchport access vlan 11
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/2
+ switchport access vlan 12
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/3
+ switchport access vlan 13
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/4
+ switchport access vlan 21
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/5
+ switchport access vlan 22
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/6
+ switchport access vlan 23
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/7
+ switchport access vlan 24
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/8
+ switchport access vlan 31
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/9
+ switchport access vlan 32
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/10
+ switchport access vlan 33
+ switchport mode access
+ switchport port-security maximum 3
+!
+interface FastEthernet0/11
+ switchport mode trunk
+!
+interface FastEthernet0/12
+ switchport mode trunk
+!
+interface FastEthernet0/13
+ switchport mode trunk
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address dhcp
+ no ip route-cache
+!
+interface Vlan10
+ ip address 172.18.162.129 255.255.255.252
+ no ip route-cache
+!
+ip default-gateway 172.18.162.130
+ip http server
+ip http secure-server
+access-list 1 permit 172.18.160.0 0.0.0.63
+access-list 1 permit 172.18.160.192 0.0.0.63
+access-list 1 permit 172.18.161.192 0.0.0.63
+access-list 1 deny   any
+!
+control-plane
+!
+banner motd ^CCCCBienvenido al Switch 1^C
+!
+line con 0
+ login local
+line vty 0 4
+ access-class 1 in
+ login local
+ transport input all
+line vty 5 15
+ access-class 1 in
+ login local
+ transport input all
+!
+end
