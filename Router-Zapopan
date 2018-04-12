@@ -1,0 +1,160 @@
+Current configuration : 2455 bytes
+!
+! Last configuration change at 15:35:12 UTC Mon Apr 9 2018 by cisco
+version 15.1
+no service timestamps debug uptime
+no service timestamps log uptime
+service password-encryption
+!
+hostname RT-Zapopan
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+no ipv6 cef
+ip source-route
+no ip cef
+!
+!
+!
+!
+!
+ip domain name redes2.com
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki token default removal timeout 0
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX161687X1
+license boot module c2900 technology-package uck9
+!
+!
+username cisco password 7 0822455D0A16
+!
+redundancy
+!
+!
+ip ssh version 2
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.18.163.65 255.255.255.224
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.21
+ encapsulation dot1Q 21
+ ip address 172.18.160.254 255.255.255.192
+!
+interface GigabitEthernet0/0.22
+ encapsulation dot1Q 22
+ ip address 172.18.161.62 255.255.255.192
+ ip helper-address 172.18.160.193
+!
+interface GigabitEthernet0/0.23
+ encapsulation dot1Q 23
+ ip address 172.18.161.126 255.255.255.192
+ ip helper-address 172.18.160.193
+!
+interface GigabitEthernet0/0.24
+ encapsulation dot1Q 24
+ ip address 172.18.161.190 255.255.255.192
+ ip helper-address 172.18.160.193
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ ip address 172.18.163.249 255.255.255.252
+ no fair-queue
+ clock rate 2000000
+!
+interface Serial0/0/1
+ ip address 172.18.163.254 255.255.255.252
+!
+router rip
+ version 2
+ network 172.18.0.0
+ no auto-summary
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+ip flow-export version 9
+!
+!
+access-list 1 permit 172.18.160.0 0.0.0.63
+access-list 1 permit 172.18.160.192 0.0.0.63
+access-list 1 permit 172.18.161.192 0.0.0.63
+access-list 1 deny   any
+!
+!
+!
+control-plane
+!
+!
+!
+!
+mgcp profile default
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+banner motd ^CCCCBienvenido al Router de Zapopan^C
+!
+line con 0
+ login local
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport input all
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ access-class 1 in
+ login local
+ transport input all
+line vty 5 15
+ access-class 1 in
+ login local
+ transport input all
+!
+scheduler allocate 20000 1000
+end
